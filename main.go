@@ -4,10 +4,10 @@ import "big2/domain"
 
 func main() {
 
-	playhandler := domain.NewIPlayHandler(domain.NewSinglePlayHandler(
-		domain.NewIPlayHandler(domain.NewPairPlayHandler(
-			domain.NewIPlayHandler(domain.NewStraightPlayHandler(
-				domain.NewIPlayHandler(domain.NewFullHousePlayHandler(nil)),
+	playhandler := domain.NewIMakeCardPatternHandler(domain.NewSinglePlayHandler(
+		domain.NewIMakeCardPatternHandler(domain.NewPairPlayHandler(
+			domain.NewIMakeCardPatternHandler(domain.NewStraightPlayHandler(
+				domain.NewIMakeCardPatternHandler(domain.NewFullHousePlayHandler(nil)),
 			)),
 		)),
 	))

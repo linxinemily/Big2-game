@@ -13,3 +13,7 @@ func NewCard(rank enum.Rank, suit enum.Suit) (c *Card) {
 		Suit: suit,
 	}
 }
+
+func (card *Card) isEuqalTo(card2 *Card) bool {
+	return card.Rank == card2.Rank && card.Suit == card2.Suit
+}

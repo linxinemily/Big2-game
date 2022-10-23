@@ -1,13 +1,14 @@
 package domain
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type IPlayer struct {
 	Player
 }
 
-func (p *IPlayer) takeTurn(topPlay CardPattern, turn int) CardPattern {
-	fmt.Println(p)
+func (p *IPlayer) takeTurn(turn int) CardPattern {
 	fmt.Printf("It's player %s's turn\n", p.Name())
 	canPass := true
 	if turn == 0 { // 新回合首輪玩家不能喊 pass
@@ -18,14 +19,16 @@ func (p *IPlayer) takeTurn(topPlay CardPattern, turn int) CardPattern {
 		cards := p.getCardsFromUserInput()
 		if len(cards) == 0 { // pass
 			if canPass {
-
 				fmt.Printf("player %s pass\n", p.Name())
 				return nil
 			} else {
 				fmt.Println("cannot pass")
 			}
 		} else {
-			cardPattern := p.play(cards, topPlay)
+			cardPattern := p.play(cards)
+
+			fmt.Println("card pattern: ", cardPattern)
+
 			if cardPattern != nil {
 				return cardPattern
 			}
@@ -34,40 +37,32 @@ func (p *IPlayer) takeTurn(topPlay CardPattern, turn int) CardPattern {
 }
 
 type Player interface {
-	// pass()
-	play(cards []*Card, topCardPattern CardPattern) CardPattern
+	play(cards []*Card) CardPattern
 	nameSelf()
 	addCardIntoHand(card *Card)
 	Hand() []*Card
 	Id() int
 	Name() string
 	getCardsFromUserInput() []*Card
+	removeCardFromHand(card *Card) *Card
 }
 
 type AbstractPlayer struct {
-	PlayHandler *IPlayHandler
-	name        string
-	id          int
-	hand        []*Card
+	CardPatternHandler *IMakeCardPatternHandler
+	name               string
+	id                 int
+	hand               []*Card
 }
 
-func NewAbstractPlayer(id int, playHandler *IPlayHandler) *AbstractPlayer {
+func NewAbstractPlayer(id int, playHandler *IMakeCardPatternHandler) *AbstractPlayer {
 	return &AbstractPlayer{
-		id:          id,
-		PlayHandler: playHandler,
+		id:                 id,
+		CardPatternHandler: playHandler,
 	}
 }
 
-// func (p *AbstractPlayer) pass(input int) bool {
-// 	return input == -1
-// }
-
-func (p *AbstractPlayer) play(cards []*Card, topCardPattern CardPattern) CardPattern {
-	return p.PlayHandler.play(cards, topCardPattern)
-}
-
-func (p *AbstractPlayer) nameSelf() {
-
+func (p *AbstractPlayer) play(cards []*Card) CardPattern {
+	return p.CardPatternHandler.handle(cards)
 }
 
 func (p *AbstractPlayer) addCardIntoHand(card *Card) {
@@ -84,4 +79,21 @@ func (p *AbstractPlayer) Id() int {
 
 func (p *AbstractPlayer) Name() string {
 	return p.name
+}
+
+func (p *AbstractPlayer) removeCardFromHandByIdx(i int) (*Card, error) {
+	card := p.hand[i]
+	p.hand[i] = p.hand[len(p.hand)-1]
+	p.hand = p.hand[:len(p.hand)-1]
+	return card, nil
+}
+
+func (p *AbstractPlayer) removeCardFromHand(card *Card) *Card {
+	for i, handCard := range p.hand {
+		if handCard.isEuqalTo(card) {
+			r, _ := p.removeCardFromHandByIdx(i)
+			return r
+		}
+	}
+	return nil
 }
