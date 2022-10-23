@@ -32,11 +32,18 @@ func TestMatchStraight(t *testing.T) {
 			{Rank: enum.Two, Suit: enum.Heart},
 		},
 		{
-			{Rank: enum.K, Suit: enum.Heart},
-			{Rank: enum.A, Suit: enum.Diamond},
 			{Rank: enum.Two, Suit: enum.Diamond},
 			{Rank: enum.Three, Suit: enum.Spade},
 			{Rank: enum.Four, Suit: enum.Heart},
+			{Rank: enum.Five, Suit: enum.Heart},
+			{Rank: enum.Six, Suit: enum.Diamond},
+		},
+		{
+			{Rank: enum.Two, Suit: enum.Diamond},
+			{Rank: enum.Three, Suit: enum.Spade},
+			{Rank: enum.Q, Suit: enum.Heart},
+			{Rank: enum.K, Suit: enum.Heart},
+			{Rank: enum.A, Suit: enum.Diamond},
 		},
 	}
 
@@ -46,30 +53,26 @@ func TestMatchStraight(t *testing.T) {
 		})
 	}
 
-	t.Run("invalid input", func(t *testing.T) {
-		cards := []*Card{
-			{
-				Rank: enum.Three,
-				Suit: enum.Heart,
-			},
-			{
-				Rank: enum.A,
-				Suit: enum.Diamond,
-			},
-			{
-				Rank: enum.Night,
-				Suit: enum.Diamond,
-			},
-			{
-				Rank: enum.Night,
-				Suit: enum.Spade,
-			},
-			{
-				Rank: enum.A,
-				Suit: enum.Heart,
-			},
-		}
+	invalidInputs := [][]*Card{
+		{
+			{Rank: enum.Three, Suit: enum.Heart},
+			{Rank: enum.A, Suit: enum.Diamond},
+			{Rank: enum.Night, Suit: enum.Diamond},
+			{Rank: enum.Night, Suit: enum.Spade},
+			{Rank: enum.A, Suit: enum.Heart},
+		},
+		{
+			{Rank: enum.Two, Suit: enum.Diamond},
+			{Rank: enum.Five, Suit: enum.Spade},
+			{Rank: enum.Six, Suit: enum.Heart},
+			{Rank: enum.J, Suit: enum.Heart},
+			{Rank: enum.A, Suit: enum.Diamond},
+		},
+	}
 
-		assert.False(t, NewFullHousePlayHandler(nil).match(cards))
-	})
+	for i := 0; i < len(invalidInputs); i++ {
+		t.Run(fmt.Sprintf("invalid inputs %v", i), func(t *testing.T) {
+			assert.False(t, NewStraightPlayHandler(nil).match(invalidInputs[i]))
+		})
+	}
 }

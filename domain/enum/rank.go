@@ -3,8 +3,7 @@ package enum
 type Rank int
 
 const (
-	Two Rank = iota
-	Three
+	Three Rank = iota
 	Four
 	Five
 	Six
@@ -16,11 +15,11 @@ const (
 	Q
 	K
 	A
+	Two
 )
 
 func (r Rank) String() string {
 	return map[Rank]string{
-		Two:   "2",
 		Three: "3",
 		Four:  "4",
 		Five:  "5",
@@ -33,5 +32,6 @@ func (r Rank) String() string {
 		Q:     "Q",
 		K:     "K",
 		A:     "A",
+		Two:   "2",
 	}[r]
 }
