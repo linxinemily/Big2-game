@@ -1,7 +1,6 @@
 package domain
 
 import (
-	"big2/domain/enum"
 	"sort"
 )
 
@@ -15,38 +14,27 @@ func NewFullHousePlayHandler(next *IMakeCardPatternHandler) *FullHousePlayHandle
 	}
 }
 
-func (handler *FullHousePlayHandler) match(cards []*Card) bool {
+func (handler *FullHousePlayHandler) match(cards []*Card) (cardPattern CardPattern, ok bool) {
 	if len(cards) != 5 {
-		return false
-	}
-	// 1. group by rank
-	m := make(map[enum.Rank]int)
-
-	for _, card := range cards {
-		if _, exists := m[card.Rank]; !exists {
-			m[card.Rank] = 1
-		} else {
-			m[card.Rank] += 1
-		}
+		return nil, false
 	}
 
-	type CalculatedResult struct {
-		Rank  enum.Rank
-		Count int
-	}
-	var group []CalculatedResult
-	for key, val := range m {
-		group = append(group, CalculatedResult{Rank: key, Count: val})
-	}
-
-	// 2. sort by count desc
-	sort.Slice(group, func(i, j int) bool {
-		return group[i].Count < group[j].Count
+	sort.Slice(cards, func(i, j int) bool {
+		return cards[i].Rank > cards[j].Rank
 	})
-	// 3. first group's count should be 3 and second group's count should be 2
-	return group[0].Count == 2 && group[1].Count == 3
-}
 
-func (handler *FullHousePlayHandler) makeCardPattern(cards []*Card) (cardPattern CardPattern) {
-	return NewFullHouseCardPattern(cards)
+	// 2 + 3 組合 => 需對調（3張要在前面）
+	if cards[0].Rank == cards[1].Rank && cards[2].Rank == cards[3].Rank && cards[3].Rank == cards[4].Rank {
+		mergeCards := make([]*Card, 0)
+		mergeCards = append(mergeCards, cards[2:]...)
+		mergeCards = append(mergeCards, cards[:2]...)
+		return NewFullHouseCardPattern(mergeCards), true
+	}
+
+	// 3 + 2 組合 => 直接回傳
+	if cards[0].Rank == cards[1].Rank && cards[1].Rank == cards[2].Rank && cards[3].Rank == cards[4].Rank {
+		return NewFullHouseCardPattern(cards), true
+	}
+
+	return nil, false
 }

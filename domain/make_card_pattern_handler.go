@@ -12,8 +12,8 @@ func NewIMakeCardPatternHandler(handler MakeCardPatternHandler) *IMakeCardPatter
 
 func (handler *IMakeCardPatternHandler) handle(cards []*Card) CardPattern { // template method
 
-	if handler.match(cards) {
-		return handler.makeCardPattern(cards)
+	if cardPattern, ok := handler.match(cards); ok {
+		return cardPattern
 	} else if handler.getNext() != nil {
 		return handler.getNext().handle(cards)
 	}
@@ -22,8 +22,7 @@ func (handler *IMakeCardPatternHandler) handle(cards []*Card) CardPattern { // t
 }
 
 type MakeCardPatternHandler interface {
-	match(cards []*Card) bool
-	makeCardPattern(cards []*Card) (cardPattern CardPattern)
+	match(cards []*Card) (cardPattern CardPattern, ok bool)
 	getNext() *IMakeCardPatternHandler
 }
 

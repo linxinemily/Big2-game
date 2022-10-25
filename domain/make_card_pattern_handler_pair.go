@@ -10,10 +10,7 @@ func NewPairPlayHandler(next *IMakeCardPatternHandler) *PairPlayHandler {
 	}
 }
 
-func (handler *PairPlayHandler) match(cards []*Card) bool {
-	return len(cards) == 2 && cards[0].Rank == cards[1].Rank
-}
-
-func (handler *PairPlayHandler) makeCardPattern(cards []*Card) (cardPattern CardPattern) {
-	return NewPairCardPattern(cards)
+func (handler *PairPlayHandler) match(cards []*Card) (cardPattern CardPattern, ok bool) {
+	ok = len(cards) == 2 && cards[0].Rank == cards[1].Rank
+	return NewPairCardPattern(cards), ok
 }
