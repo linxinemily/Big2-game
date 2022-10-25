@@ -98,7 +98,7 @@ func TestMatchStraightWithValidInput(t *testing.T) {
 
 	for i := 0; i < len(validInputs); i++ {
 		t.Run(fmt.Sprintf("valid inputs %v", i), func(t *testing.T) {
-			output, ok := NewStraightPlayHandler(nil).match(validInputs[i].input)
+			output, ok := NewMakeStraightCardPatternHandler(nil).match(validInputs[i].input)
 			assert.True(t, ok, output)
 			for j := 0; j < 5; j++ {
 				assert.True(t, output.getCards()[j].isEuqalTo(validInputs[i].expect[j]))
@@ -127,7 +127,7 @@ func TestMatchStraightWithInvalidInput(t *testing.T) {
 
 	for i := 0; i < len(invalidInputs); i++ {
 		t.Run(fmt.Sprintf("invalid inputs %v", i), func(t *testing.T) {
-			_, ok := NewStraightPlayHandler(nil).match(invalidInputs[i])
+			_, ok := NewMakeStraightCardPatternHandler(nil).match(invalidInputs[i])
 			assert.False(t, ok)
 		})
 	}

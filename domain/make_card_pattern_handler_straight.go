@@ -6,17 +6,17 @@ import (
 	"sort"
 )
 
-type StraightPlayHandler struct {
+type MakeStraightCardPatternHandler struct {
 	*AbstractMakeCardPatternHandler
 }
 
-func NewStraightPlayHandler(next *IMakeCardPatternHandler) *StraightPlayHandler {
-	return &StraightPlayHandler{
+func NewMakeStraightCardPatternHandler(next *IMakeCardPatternHandler) *MakeStraightCardPatternHandler {
+	return &MakeStraightCardPatternHandler{
 		AbstractMakeCardPatternHandler: NewAbstractHandler(next),
 	}
 }
 
-func (handler *StraightPlayHandler) match(cards []*Card) (cardPattern CardPattern, ok bool) {
+func (handler *MakeStraightCardPatternHandler) match(cards []*Card) (cardPattern CardPattern, ok bool) {
 	if len(cards) != 5 {
 		return nil, false
 	}

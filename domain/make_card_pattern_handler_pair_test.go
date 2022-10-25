@@ -37,7 +37,7 @@ func TestMatchPairWithValidInput(t *testing.T) {
 
 	for i := 0; i < len(validInputs); i++ {
 		t.Run(fmt.Sprintf("valid inputs %v", i), func(t *testing.T) {
-			output, ok := NewPairPlayHandler(nil).match(validInputs[i].input)
+			output, ok := NewMakePairCardPatternHandler(nil).match(validInputs[i].input)
 			assert.True(t, ok, output)
 			for j := 0; j < len(validInputs[i].input); j++ {
 				assert.True(t, output.getCards()[j].isEuqalTo(validInputs[i].expect[j]))
@@ -53,7 +53,7 @@ func TestMatchPairWithInvalidInput(t *testing.T) {
 	}
 
 	t.Run("invalid input", func(t *testing.T) {
-		_, ok := NewPairPlayHandler(nil).match(invalidInputs)
+		_, ok := NewMakePairCardPatternHandler(nil).match(invalidInputs)
 		assert.False(t, ok)
 	})
 }

@@ -1,16 +1,16 @@
 package domain
 
-type SinglePlayHandler struct {
+type MakeSingleCardPatternHandler struct {
 	*AbstractMakeCardPatternHandler
 }
 
-func NewSinglePlayHandler(next *IMakeCardPatternHandler) *SinglePlayHandler {
-	return &SinglePlayHandler{
+func NewMakeSingleCardPatternHandler(next *IMakeCardPatternHandler) *MakeSingleCardPatternHandler {
+	return &MakeSingleCardPatternHandler{
 		AbstractMakeCardPatternHandler: NewAbstractHandler(next),
 	}
 }
 
-func (handler *SinglePlayHandler) match(cards []*Card) (cardPattern CardPattern, ok bool) {
+func (handler *MakeSingleCardPatternHandler) match(cards []*Card) (cardPattern CardPattern, ok bool) {
 	ok = len(cards) == 1
 	return NewSingleCardPattern(cards), ok
 }

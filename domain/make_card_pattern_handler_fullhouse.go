@@ -4,17 +4,17 @@ import (
 	"sort"
 )
 
-type FullHousePlayHandler struct {
+type MakeFullHouseCardPatternHandler struct {
 	*AbstractMakeCardPatternHandler
 }
 
-func NewFullHousePlayHandler(next *IMakeCardPatternHandler) *FullHousePlayHandler {
-	return &FullHousePlayHandler{
+func NewMakeFullHouseCardPatternHandler(next *IMakeCardPatternHandler) *MakeFullHouseCardPatternHandler {
+	return &MakeFullHouseCardPatternHandler{
 		AbstractMakeCardPatternHandler: NewAbstractHandler(next),
 	}
 }
 
-func (handler *FullHousePlayHandler) match(cards []*Card) (cardPattern CardPattern, ok bool) {
+func (handler *MakeFullHouseCardPatternHandler) match(cards []*Card) (cardPattern CardPattern, ok bool) {
 	if len(cards) != 5 {
 		return nil, false
 	}

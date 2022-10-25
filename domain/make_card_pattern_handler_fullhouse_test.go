@@ -65,7 +65,7 @@ func TestMatchFullHouseWithValidData(t *testing.T) {
 
 	for i := 0; i < len(validInputs); i++ {
 		t.Run(fmt.Sprintf("valid inputs %v", i), func(t *testing.T) {
-			output, ok := NewFullHousePlayHandler(nil).match(validInputs[i].input)
+			output, ok := NewMakeFullHouseCardPatternHandler(nil).match(validInputs[i].input)
 			assert.True(t, ok, output)
 			for j := 0; j < 5; j++ {
 				assert.True(t, output.getCards()[j].isEuqalTo(validInputs[i].expect[j]))
@@ -98,7 +98,7 @@ func TestMatchFullHouseWithInValidData(t *testing.T) {
 			},
 		}
 
-		_, ok := NewFullHousePlayHandler(nil).match(cards)
+		_, ok := NewMakeFullHouseCardPatternHandler(nil).match(cards)
 		assert.False(t, ok)
 	})
 }
