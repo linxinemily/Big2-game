@@ -13,8 +13,8 @@ type Deck struct {
 func NewDeck() (d *Deck) {
 	cards := make([]*Card, 52)
 	var count int
-	for suit := enum.Suit(0); suit < enum.Spade+1; suit++ {
-		for rank := enum.Rank(0); rank < enum.A+1; rank++ {
+	for suit := enum.Suit(0); suit < enum.Suit(3)+1; suit++ {
+		for rank := enum.Rank(0); rank < enum.Rank(12)+1; rank++ {
 			cards[count] = NewCard(rank, suit)
 			count++
 		}
@@ -24,7 +24,6 @@ func NewDeck() (d *Deck) {
 		cards: cards,
 	}
 }
-
 
 func (d *Deck) deal() *Card {
 	// check cards length
