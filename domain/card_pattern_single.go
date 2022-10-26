@@ -11,10 +11,10 @@ func NewSingleCardPattern(cards []*Card) *SingleCardPattern {
 }
 
 func (pattern *SingleCardPattern) isBiggerThan(another CardPattern) bool {
-	_, ok := another.(*SingleCardPattern)
+	pattern2, ok := another.(*SingleCardPattern)
 	if !ok {
 		return false
 	}
 
-	return false
+	return pattern.getCards()[0].isBiggerThan(pattern2.getCards()[0])
 }
