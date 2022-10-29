@@ -16,5 +16,9 @@ func (pattern *SingleCardPattern) isBiggerThan(another CardPattern) bool {
 		return false
 	}
 
-	return pattern.getCards()[0].isBiggerThan(pattern2.getCards()[0])
+	return pattern.Cards()[0].isBiggerThan(pattern2.Cards()[0])
+}
+
+func (pattern *SingleCardPattern) Name() string {
+	return "單張"
 }

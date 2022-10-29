@@ -8,9 +8,10 @@ import (
 
 type CardPattern interface {
 	isBiggerThan(another CardPattern) bool
-	String() string
+	printCards() string
 	containsClub3() bool
-	getCards() []*Card
+	Cards() []*Card
+	Name() string
 }
 
 type AbstractCardPattern struct {
@@ -23,12 +24,11 @@ func NewAbstractCardPattern(cards []*Card) *AbstractCardPattern {
 	}
 }
 
-func (cardPattern *AbstractCardPattern) String() string {
+func (cardPattern *AbstractCardPattern) printCards() string {
 	var sb strings.Builder
 	for _, card := range cardPattern.cards {
-		sb.WriteString(fmt.Sprintf("rank: %s, suit: %s\n", card.Rank, card.Suit))
+		sb.WriteString(fmt.Sprintf("%s[%s] ", card.Suit, card.Rank))
 	}
-	fmt.Println(fmt.Sprintf(sb.String()))
 	return fmt.Sprintf(sb.String())
 }
 
@@ -42,6 +42,6 @@ func (cardPattern *AbstractCardPattern) containsClub3() bool {
 	return false
 }
 
-func (cardPattern *AbstractCardPattern) getCards() []*Card {
+func (cardPattern *AbstractCardPattern) Cards() []*Card {
 	return cardPattern.cards
 }

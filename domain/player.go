@@ -9,7 +9,7 @@ type IPlayer struct {
 }
 
 func (p *IPlayer) takeTurn(turn int) CardPattern {
-	fmt.Printf("It's player %s's turn\n", p.Name())
+	fmt.Printf("輪到%s了\n", p.Name())
 	canPass := true
 	if turn == 0 { // 新回合首輪玩家不能喊 pass
 		canPass = false
@@ -19,16 +19,12 @@ func (p *IPlayer) takeTurn(turn int) CardPattern {
 		cards := p.getCardsFromUserInput()
 		if len(cards) == 0 { // pass
 			if canPass {
-				fmt.Printf("player %s pass\n", p.Name())
 				return nil
 			} else {
 				fmt.Println("cannot pass")
 			}
 		} else {
 			cardPattern := p.play(cards)
-
-			fmt.Println("card pattern: ", cardPattern)
-
 			if cardPattern != nil {
 				return cardPattern
 			}

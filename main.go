@@ -4,7 +4,7 @@ import "big2/domain"
 
 func main() {
 
-	playhandler := domain.NewIMakeCardPatternHandler(domain.NewMakeSingleCardPatternHandler(
+	makeCardPatternHandler := domain.NewIMakeCardPatternHandler(domain.NewMakeSingleCardPatternHandler(
 		domain.NewIMakeCardPatternHandler(domain.NewMakePairCardPatternHandler(
 			domain.NewIMakeCardPatternHandler(domain.NewMakeStraightCardPatternHandler(
 				domain.NewIMakeCardPatternHandler(domain.NewMakeFullHouseCardPatternHandler(nil)),
@@ -12,12 +12,12 @@ func main() {
 		)),
 	))
 
-	big2 := domain.NewBig2(playhandler)
+	big2 := domain.NewBig2(makeCardPatternHandler)
 
 	big2.GenerateHumanPlayer()
-	big2.GenerateAIPlayer()
-	big2.GenerateAIPlayer()
-	big2.GenerateAIPlayer()
+	big2.GenerateHumanPlayer()
+	big2.GenerateHumanPlayer()
+	big2.GenerateHumanPlayer()
 
 	big2.Start()
 	big2.ShowWinner()

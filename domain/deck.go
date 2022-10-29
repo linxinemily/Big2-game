@@ -62,7 +62,7 @@ func (d *Deck) shuffle() {
 	})
 }
 
-func (d *Deck) getCards() []*Card {
+func (d *Deck) Cards() []*Card {
 	return d.cards
 }
 

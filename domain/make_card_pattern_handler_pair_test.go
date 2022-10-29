@@ -40,7 +40,7 @@ func TestMatchPairWithValidInput(t *testing.T) {
 			output, ok := NewMakePairCardPatternHandler(nil).match(validInputs[i].input)
 			assert.True(t, ok, output)
 			for j := 0; j < len(validInputs[i].input); j++ {
-				assert.True(t, output.getCards()[j].isEuqalTo(validInputs[i].expect[j]))
+				assert.True(t, output.Cards()[j].isEuqalTo(validInputs[i].expect[j]))
 			}
 		})
 	}

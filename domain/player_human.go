@@ -48,7 +48,6 @@ func (p *HumanPlayer) getCardsFromUserInput() []*Card {
 		res = cards
 	}
 
-	fmt.Println("end")
 	return res
 }
 
