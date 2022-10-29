@@ -60,9 +60,12 @@ func (p *HumanPlayer) nameSelf() {
 }
 
 func (p *HumanPlayer) printHand() {
-	fmt.Println("Your hand:")
-	for i, c := range p.hand {
-		fmt.Printf("[%d] rank %s, suit %s \n", i, c.Rank, c.Suit)
+	for i := range p.hand {
+		fmt.Printf("%d    ", i)
 	}
-	fmt.Println("or enter [-1] to pass this turn")
+	fmt.Println()
+	for _, c := range p.hand {
+		fmt.Printf("%s[%s] ", c.Suit, c.Rank)
+	}
+	fmt.Println()
 }

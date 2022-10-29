@@ -16,10 +16,10 @@ type Big2 struct {
 	playHandler *IMakeCardPatternHandler
 }
 
-func NewBig2(playHandler *IMakeCardPatternHandler) *Big2 {
+func NewBig2(playHandler *IMakeCardPatternHandler, deck *Deck) *Big2 {
 	return &Big2{
 		round:       1,
-		deck:        NewDeck(),
+		deck:        deck,
 		playHandler: playHandler,
 	}
 }
@@ -57,8 +57,6 @@ func (big2 *Big2) playerDrawCards() {
 
 func (big2 *Big2) Start() {
 
-	big2.deck.shuffle()
-
 	big2.playerDrawCards()
 
 	for big2.winner == nil {
@@ -80,7 +78,9 @@ func (big2 *Big2) takeRound() {
 		fmt.Printf("top player is %s\n", player.Name())
 	}
 
-	for turn := 0; turn < len(big2.players); turn++ {
+	turn := 0
+	passCount := 0
+	for passCount < 3 {
 
 		var cardPattern CardPattern
 
@@ -121,12 +121,17 @@ func (big2 *Big2) takeRound() {
 			big2.topPlay = cardPattern
 			big2.topPlayer = player
 			fmt.Printf("top Play: %s %s\n", big2.topPlay.Name(), big2.topPlay.printCards())
+
+			// 玩家出完新的牌後才開始起算接下來有幾個 pass
+			passCount = 0
 		} else {
+			passCount += 1
 			fmt.Printf("玩家 %s PASS.\n", player.Name())
 		}
 
 		nextPlayerId := (player.Id() + 1) % len(big2.players)
 		player = big2.players[nextPlayerId]
+		turn += 1
 	}
 
 	big2.topPlay = nil

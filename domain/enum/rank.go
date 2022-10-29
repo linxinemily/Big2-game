@@ -35,3 +35,21 @@ func (r Rank) String() string {
 		Two:   "2",
 	}[r]
 }
+
+func RankStringToVal(str string) Rank {
+	return map[string]Rank{
+		"3":  Three,
+		"4":  Four,
+		"5":  Five,
+		"6":  Six,
+		"7":  Seven,
+		"8":  Eight,
+		"9":  Night,
+		"10": Ten,
+		"J":  J,
+		"Q":  Q,
+		"K":  K,
+		"A":  A,
+		"2":  Two,
+	}[str]
+}

@@ -2,6 +2,7 @@ package domain
 
 import (
 	"fmt"
+	"sort"
 )
 
 type IPlayer struct {
@@ -63,6 +64,7 @@ func (p *AbstractPlayer) play(cards []*Card) CardPattern {
 
 func (p *AbstractPlayer) addCardIntoHand(card *Card) {
 	p.hand = append(p.hand, card)
+	sort.Sort(CardSlice(p.hand))
 }
 
 func (p *AbstractPlayer) Hand() []*Card {
@@ -81,6 +83,7 @@ func (p *AbstractPlayer) removeCardFromHandByIdx(i int) (*Card, error) {
 	card := p.hand[i]
 	p.hand[i] = p.hand[len(p.hand)-1]
 	p.hand = p.hand[:len(p.hand)-1]
+	sort.Sort(CardSlice(p.hand))
 	return card, nil
 }
 
